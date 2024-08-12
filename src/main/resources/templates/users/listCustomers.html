@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'customers','Danh sách người đặt  ịch')}"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<body>
+
+
+<div class="row align-items-center justify-content-center" style="margin-top: 50px">
+    <div>
+        <table id="customers" class="table table-striped text-center shadow">
+<!--            // TODO: change colors-->
+            <thead class="thead-primary" style="background-color: #e3f2fd;">
+            <tr>
+                <th> Tên</th>
+                <th> Đối tượng </th>
+                <th> E-mail</th>
+                <th> Các cuộc hẹn</th>
+                <th> Hành động</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:if="${customers == null}">
+                <td colspan="4"> Không có khách hàng nào.</td>
+            </tr>
+            <tr th:each="customer : ${customers}" th:classappend="${customer.getType()=='retail' ? 'table' : 'table-info'}">
+                <td><span th:text="${customer.lastName +' ' + customer.firstName}"> Họ và Tên </span></td>
+                <td><span th:text="${customer.getType() == 'retail'? 'retail':'corporate'}"> retail </span></td>
+                <td><span th:text="${customer.email }"> email </span></td>
+                <td><span th:text="${customer.appointments.size() }"> 3 </span></td>
+                <td><a class="btn btn-secondary" th:href="@{'/customers/' + ${customer.id}}"
+                       role="button">Chi tiết</a>
+                    <form class="d-inline-block" th:action="@{/customers/delete}" method="POST">
+                        <input type="hidden" name="customerId" th:value="${customer.id}" />
+                        <button type="submit" name="submit" value="value" class="btn btn-danger">Xóa</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+
+</body>
+
+</html>

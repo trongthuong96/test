@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+
+    <style>
+        body {
+            font-family: 'Times New Roman', serif;
+        }
+        .invoice-box {
+            max-width: 800px;
+            margin: auto;
+            padding: 30px;
+            border: 1px solid #eee;
+            box-shadow: 0 0 10px rgba(0, 0, 0, .15);
+            font-size: 16px;
+            line-height: 24px;
+            font-family: 'Times New Roman', serif;
+            color: #555;
+        }
+
+        .invoice-box table {
+            width: 100%;
+            line-height: inherit;
+            text-align: left;
+        }
+
+        .invoice-box table td {
+            padding: 5px;
+            vertical-align: top;
+        }
+
+        .invoice-box table tr td:nth-child(2) {
+            text-align: right;
+        }
+
+        .invoice-box table tr.top table td {
+            padding-bottom: 20px;
+        }
+
+        .invoice-box table tr.top table td.title {
+            font-size: 45px;
+            line-height: 45px;
+            color: #333;
+        }
+
+        .invoice-box table tr.information table td {
+            padding-bottom: 40px;
+        }
+
+        .invoice-box table tr.heading td {
+            background: #eee;
+            border-bottom: 1px solid #ddd;
+            font-weight: bold;
+        }
+
+        .invoice-box table tr.details td {
+            padding-bottom: 20px;
+        }
+
+        .invoice-box table tr.item td {
+            border-bottom: 1px solid #eee;
+        }
+
+        .invoice-box table tr.item.last td {
+            border-bottom: none;
+        }
+
+        .invoice-box table tr.total td:nth-child(2) {
+            border-top: 2px solid #eee;
+            font-weight: bold;
+        }
+
+        @media only screen and (max-width: 600px) {
+            .invoice-box table tr.top table td {
+                width: 100%;
+                display: block;
+                text-align: center;
+            }
+
+            .invoice-box table tr.information table td {
+                width: 100%;
+                display: block;
+                text-align: center;
+            }
+        }
+
+        /** RTL **/
+        .rtl {
+            direction: rtl;
+            font-family: 'Times New Roman', serif;
+        }
+
+        .rtl table {
+            text-align: right;
+        }
+
+        .rtl table tr td:nth-child(2) {
+            text-align: left;
+        }
+
+        #number {
+            font-size: 20px;
+        }
+    </style>
+</head>
+
+<body>
+<div class="invoice-box">
+    <table cellpadding="0" cellspacing="0">
+        <tr class="top">
+            <td colspan="2">
+                <table>
+                    <tr>
+                        <td class="title">
+                            <img src="/img/logo.jpg" style="width:100%; max-width:300px;" />
+                        </td>
+
+                        <td>
+                            <span th:text="${invoice.number}" id="number">TDT/2019/03/42</span><br />
+                            Ngày xuất: <span th:text="${#temporals.format(invoice.issued, 'dd-MM-yyyy')}">Xuất: 01-03-2019</span><br/>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr class="information">
+            <td colspan="2">
+                <table>
+                    <tr>
+                        <td>
+                            <b>Từ:</b><br/>
+                            Website PDuong<br/>
+                            0899070159 <br/>
+                            s2thuphuongs2@gmail.com
+
+                        </td>
+
+                        <td>
+                            <b>Đến:</b><br/>
+                            <span th:if="${invoice.appointments[0].customer.hasRole('ROLE_CUSTOMER_RETAIL')}" th:utext="${invoice.appointments[0].customer.firstName +' '+invoice.appointments[0].customer.lastName}+ '&lt;br /&gt;'">Met ghe a troi</span>
+                            <span th:if="${invoice.appointments[0].customer.hasRole('ROLE_CUSTOMER_CORPORATE')}" th:utext="${invoice.appointments[0].customer.companyName} +'&lt;br /&gt;'">Ten Cong ty</span>
+                            <span th:if="${invoice.appointments[0].customer.hasRole('ROLE_CUSTOMER_CORPORATE')}" th:utext="${'VAT: ' + invoice.appointments[0].customer.vatNumber}+'&lt;br /&gt;'">VAT: 697-134-42-81</span>
+                            <span th:text="${invoice.appointments[0].customer.street}">...</span><br/>
+
+                            <span th:text="${invoice.appointments[0].customer.mobile}">695-262-145</span><br/>
+                            <span th:text="${invoice.appointments[0].customer.email}">email@example.com</span>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr class="heading">
+            <td>
+                Lịch hẹn
+            </td>
+
+            <td>
+                Chi phí
+            </td>
+        </tr>
+
+        <tr th:each="appointment : ${invoice.appointments}" class="item">
+            <td>
+                <span th:text="${appointment.work.name +', bác sĩ '+appointment.provider.lastName +' '+appointment.provider.firstName +' vào ngày '+#temporals.format(appointment.start, 'dd-MM-yyyy HH:mm')}"></span>
+            </td>
+
+            <td>
+                <span th:text="${appointment.work.price}">50 VND</span> VNĐ
+            </td>
+        </tr>
+
+        <tr class="total">
+            <td></td>
+
+            <td>
+                Tổng: <span th:text="${invoice.totalAmount}">50 VNĐ</span> VNĐ
+            </td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

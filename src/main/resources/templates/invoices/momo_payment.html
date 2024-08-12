@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="vi">
+    <head>
+        <meta charset="UTF-8">
+        <title>MoMo Payment</title>
+        <style>
+            body {
+                padding: 100px 0px 0px 0px;
+                padding-top: 100px;
+                padding-right: 0px;
+                padding-bottom: 0px;
+                padding-left: 0px;
+                margin: 0;
+                display: flex;
+                background-color: #f4f4f4;
+                align-items: center;
+                align-content: center;
+                align-self: center;
+                justify-content: center;
+                align-items: center;
+                height: fit-content;
+            }
+            p {
+                font-size: 20px;
+            }
+            .card {
+                background-color: #fff;
+                width: max-content;
+                border-radius: 10px;
+                box-shadow: 0 4px 8px mediumpurple;
+                padding: 20px;
+                max-width: 400px;
+                text-align: center;
+            }
+
+            button.btn.btn-secondary {
+                background-color: #0086fd;
+                color: #fff;
+                border: none;
+                border-radius: 5px;
+                padding: 10px 20px;
+                cursor: pointer;
+                font-size: 16px;
+            }
+
+
+            .card button:hover {
+                background-color: #5a6268;
+            }
+
+            .badge {
+                display: inline-block;
+                padding: 0.25em 0.4em;
+                font-size: 75%;
+                font-weight: 700;
+                line-height: 1;
+                text-align: center;
+                white-space: nowrap;
+                vertical-align: baseline;
+                border-radius: 0.25rem;
+                transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+            }
+            .badge-primary {
+                color: #fff;
+                background-color: #007bff;
+            }
+            .badge-danger {
+                color: white;
+                background-color: darkred;
+            }
+        </style>
+    </head>
+    <body>
+    <div class="card" style="text-align: center;">
+        <h1>Quét mã QR để thanh toán </h1>
+        <!--    <img th:src="@{'/img/payments/'+${appointment.invoice.getNumberTrim()}+'.png'}" alt="MoMo QR Code"/>-->
+        <img src="/img/qrcodes/HD202406001.png" alt="MoMo QR Code">
+        <h2>Chi tiết hóa đơn</h2>
+        <p>Invoice ID: <span th:text="${invoice.id}"></span></p>
+        <p>Total Amount: <span th:text="${invoice.totalAmount}"></span></p>
+        <p >Status: <span class="badge" th:text="${invoice.status}"></span></p>
+        <a href="/invoices/download/2">
+            <button class="btn btn-secondary badge-primary">Tải hóa đơn</button>
+        </a>
+        <div>
+            <p></p>
+            <a th:href="@{'/appointments/' + ${appointment.getId()} }">Back to Appointments</a>
+        </div>
+
+    </div>
+
+    <div id="lbdictex_find_popup" class="lbexpopup hidden" style="position: absolute; top: 0px; left: 0px;"><div class="lbexpopup_top"><h2 class="fl popup_title">&nbsp;</h2><ul><li><a class="close_main popup_close" href="#">&nbsp;</a></li></ul><div class="clr"></div></div><div class="popup_details"></div><div class="popup_powered">abc</div></div><div id="lbdictex_ask_mark" class="hidden" style="position: absolute; top: 0px; left: 0px;"><a class="lbdictex_ask_select" href="#">&nbsp;</a></div><iframe id="nr-ext-rsicon" style="position: absolute; display: none; width: 50px; height: 50px; z-index: 2147483647; border-style: none; background: transparent;"></iframe></body>
+    </div>
+
+</html>

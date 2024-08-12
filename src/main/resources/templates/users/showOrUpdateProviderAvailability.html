@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout (~{::body},'availability','Kế hoạch làm việc')}"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<body>
+<div class="row" style="margin-top: 50px" ;>
+    <div class="col-md-6 text-center">
+        <h2>Working plan</h2>
+        <table class="table table-striped text-center">
+            <thead class="thead-primary" style="background-color: #0066b2;">
+
+            <tr>
+                <th>Ngày</th>
+                <th>Bắt đầu</th>
+                <th>Kết thúc</th>
+                <th>Khoảng nghỉ</th>
+            </tr>
+            </thead>
+            <form th:action="@{/providers/availability}" method="POST" th:object="${plan}">
+                <input type="hidden" th:field="*{id}" th:value="${plan.id}">
+                <input type="hidden" th:field="*{provider.id}" th:value="${plan.provider.id}">
+                <tr>
+                    <td>Thứ 2</td>
+                    <td><input type="time" th:field="*{monday.workingHours.start}"
+                               th:value="${plan.monday.workingHours.start}"></td>
+                    <td><input type="time" th:field="*{monday.workingHours.end}"
+                               th:value="${plan.monday.workingHours.end}"></td>
+                    <td><span th:text="${plan.monday.breaks.size()}">3</span></td>
+                </tr>
+                <tr>
+                    <td>Thứ 3</td>
+                    <td><input type="time" th:field="*{tuesday.workingHours.start}"
+                               th:value="${plan.tuesday.workingHours.start}"></td>
+                    <td><input type="time" th:field="*{tuesday.workingHours.end}"
+                               th:value="${plan.tuesday.workingHours.end}"></td>
+                    <td><span th:text="${plan.tuesday.breaks.size()}">3</span></td>
+                </tr>
+                <tr>
+                    <td>Thứ 4</td>
+                    <td><input type="time" th:field="*{wednesday.workingHours.start}"
+                               th:value="${plan.wednesday.workingHours.start}"></td>
+                    <td><input type="time" th:field="*{wednesday.workingHours.end}"
+                               th:value="${plan.wednesday.workingHours.end}"></td>
+                    <td><span th:text="${plan.wednesday.breaks.size()}">3</span></td>
+                </tr>
+                <tr>
+                    <td>Thứ 5</td>
+                    <td><input type="time" th:field="*{thursday.workingHours.start}"
+                               th:value="${plan.thursday.workingHours.start}"></td>
+                    <td><input type="time" th:field="*{thursday.workingHours.end}"
+                               th:value="${plan.thursday.workingHours.end}"></td>
+                    <td><span th:text="${plan.thursday.breaks.size()}">3</span></td>
+                </tr>
+                <tr>
+                    <td>Thứ 6</td>
+                    <td><input type="time" th:field="*{friday.workingHours.start}"
+                               th:value="${plan.friday.workingHours.start}"></td>
+                    <td><input type="time" th:field="*{friday.workingHours.end}"
+                               th:value="${plan.friday.workingHours.end}"></td>
+                    <td><span th:text="${plan.friday.breaks.size()}">3</span></td>
+                </tr>
+                <tr>
+                    <td>Thứ 7</td>
+                    <td><input type="time" th:field="*{saturday.workingHours.start}"
+                               th:value="${plan.saturday.workingHours.start}"></td>
+                    <td><input type="time" th:field="*{saturday.workingHours.end}"
+                               th:value="${plan.saturday.workingHours.end}"></td>
+                    <td><span th:text="${plan.saturday.breaks.size()}">3</span></td>
+                </tr>
+                <tr>
+                    <td>Chủ nhật</td>
+                    <td><input type="time" th:field="*{sunday.workingHours.start}"
+                               th:value="${plan.sunday.workingHours.start}"></td>
+                    <td><input type="time" th:field="*{sunday.workingHours.end}"
+                               th:value="${plan.sunday.workingHours.end}"></td>
+                    <td><span th:text="${plan.sunday.breaks.size()}">3</span></td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <button type="submit" name="submit" value="value" class="btn btn-success">Lưu</button>
+                    </td>
+                </tr>
+
+
+            </form>
+        </table>
+
+    </div>
+    <div class="col-md-6 text-center">
+        <h2>Khoảng nghỉ</h2>
+        <table class="table table-striped text-center">
+            <thead class="thead-dark">
+
+            <tr>
+                <th>Ngày</th>
+                <th>Bắt đầu</th>
+                <th>Kết thúc</th>
+                <th>Xoá</th>
+            </tr>
+            </thead>
+
+            <tr th:each="break : ${plan.monday.breaks}">
+                <td>Thứ 2</td>
+                <td><span th:text="${break.start}">06:00</span></td>
+                <td><span th:text="${break.end}">18:00</span></td>
+                <td>
+                    <form class="d-inline-block" th:action="@{/providers/availability/breakes/delete}"
+                          th:object="${breakModel}" method="POST">
+                        <input type="hidden" name="planId" th:value="${plan.id}">
+                        <input type="hidden" name="dayOfWeek" th:value="monday" />
+                        <input type="hidden" th:name="start" th:id="start" th:value="${break.start}">
+                        <input type="hidden" th:name="end" th:id="end" th:value="${break.end}">
+                        <button type="submit" name="submit" value="value" class="btn btn-danger">Xóa</button>
+                    </form>
+                </td>
+            </tr>
+
+            <tr th:each="break : ${plan.tuesday.breaks}">
+                <td>Thứ 3</td>
+                <td><span th:text="${break.start}">06:00</span></td>
+                <td><span th:text="${break.end}">18:00</span></td>
+                <td>
+                    <form class="d-inline-block" th:action="@{/providers/availability/breakes/delete}"
+                          th:object="${breakModel}" method="POST">
+                        <input type="hidden" name="planId" th:value="${plan.id}">
+                        <input type="hidden" name="dayOfWeek" th:value="tuesday" />
+                        <input type="hidden" th:name="start" th:id="start" th:value="${break.start}">
+                        <input type="hidden" th:name="end" th:id="end" th:value="${break.end}">
+                        <button type="submit" name="submit" value="value" class="btn btn-danger">Xóa</button>
+                    </form>
+                </td>
+            </tr>
+
+            <tr th:each="break : ${plan.wednesday.breaks}">
+                <td>Thứ 4</td>
+                <td><span th:text="${break.start}">06:00</span></td>
+                <td><span th:text="${break.end}">18:00</span></td>
+                <td>
+                    <form class="d-inline-block" th:action="@{/providers/availability/breakes/delete}"
+                          th:object="${breakModel}" method="POST">
+                        <input type="hidden" name="planId" th:value="${plan.id}">
+                        <input type="hidden" name="dayOfWeek" th:value="wednesday" />
+                        <input type="hidden" th:name="start" th:id="start" th:value="${break.start}">
+                        <input type="hidden" th:name="end" th:id="end" th:value="${break.end}">
+                        <button type="submit" name="submit" value="value" class="btn btn-danger">Xóa</button>
+                    </form>
+                </td>
+            </tr>
+
+            <tr th:each="break : ${plan.thursday.breaks}">
+                <td>Thứ 5</td>
+                <td><span th:text="${break.start}">06:00</span></td>
+                <td><span th:text="${break.end}">18:00</span></td>
+                <td>
+                    <form class="d-inline-block" th:action="@{/providers/availability/breakes/delete}"
+                          th:object="${breakModel}" method="POST">
+                        <input type="hidden" name="planId" th:value="${plan.id}">
+                        <input type="hidden" name="dayOfWeek" th:value="thursday" />
+                        <input type="hidden" th:name="start" th:id="start" th:value="${break.start}">
+                        <input type="hidden" th:name="end" th:id="end" th:value="${break.end}">
+                        <button type="submit" name="submit" value="value" class="btn btn-danger">Xóa</button>
+                    </form>
+                </td>
+            </tr>
+
+            <tr th:each="break : ${plan.friday.breaks}">
+                <td>Thứ 6</td>
+                <td><span th:text="${break.start}">06:00</span></td>
+                <td><span th:text="${break.end}">18:00</span></td>
+                <td>
+                    <form class="d-inline-block" th:action="@{/providers/availability/breakes/delete}"
+                          th:object="${breakModel}" method="POST">
+                        <input type="hidden" name="planId" th:value="${plan.id}">
+                        <input type="hidden" name="dayOfWeek" th:value="friday" />
+                        <input type="hidden" th:name="start" th:id="start" th:value="${break.start}">
+                        <input type="hidden" th:name="end" th:id="end" th:value="${break.end}">
+                        <button type="submit" name="submit" value="value" class="btn btn-danger">Xóa</button>
+                    </form>
+                </td>
+            </tr>
+
+            <tr th:each="break : ${plan.saturday.breaks}">
+                <td>Thứ 7</td>
+                <td><span th:text="${break.start}">06:00</span></td>
+                <td><span th:text="${break.end}">18:00</span></td>
+                <td>
+                    <form class="d-inline-block" th:action="@{/providers/availability/breakes/delete}"
+                          th:object="${breakModel}" method="POST">
+                        <input type="hidden" name="planId" th:value="${plan.id}">
+                        <input type="hidden" name="dayOfWeek" th:value="saturday" />
+                        <input type="hidden" th:name="start" th:id="start" th:value="${break.start}">
+                        <input type="hidden" th:name="end" th:id="end" th:value="${break.end}">
+                        <button type="submit" name="submit" value="value" class="btn btn-danger">Xóa</button>
+                    </form>
+                </td>
+            </tr>
+
+            <tr th:each="break : ${plan.sunday.breaks}">
+                <td>Chủ Nhật</td>
+                <td><span th:text="${break.start}">06:00</span></td>
+                <td><span th:text="${break.end}">18:00</span></td>
+                <td>
+                    <form class="d-inline-block" th:action="@{/providers/availability/breakes/delete}"
+                          th:object="${breakModel}" method="POST">
+                        <input type="hidden" name="planId" th:value="${plan.id}">
+                        <input type="hidden" name="dayOfWeek" th:value="sunday" />
+                        <input type="hidden" th:name="start" th:id="start" th:value="${break.start}">
+                        <input type="hidden" th:name="end" th:id="end" th:value="${break.end}">
+                        <button type="submit" name="submit" value="value" class="btn btn-danger">Xóa</button>
+                    </form>
+                </td>
+            </tr>
+        </table>
+        <h2>Thêm khoảng nghỉ</h2>
+        <form class="d-inline-block" th:action="@{/providers/availability/breakes/add}" th:object="${breakModel}"
+              method="POST">
+            <input type="hidden" name="planId" th:value="${plan.id}">
+            <select name="dayOfWeek">
+                <option value="monday">Thứ 2</option>
+                <option value="tuesday">Thứ 3</option>
+                <option value="wednesday">Thứ 4</option>
+                <option value="thursday">Thứ 5</option>
+                <option value="friday">Thứ 6</option>
+                <option value="saturday">Thứ 7</option>
+                <option value="sunday">Chủ Nhật</option>
+            </select>
+            từ <input type="time" th:name="start" th:id="start">
+            đến <input type="time" th:name="end" th:id="end"> <br>
+            <div class="mt-3">
+                <button type="submit" name="submit" value="value" class="btn btn-success">Thêm</button>
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+</body>
+
+</html>

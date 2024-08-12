@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout (~{::body},'appointments','Từ chối lịch hẹn')}"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<body>
+
+<!-- Page Content -->
+<div class="row align-items-center justify-content-center" style="margin-top: 50px">
+<div th:if="${type == 'request'}">
+    <div th:if="${result}">
+        <p>Bạn đã từ chối cuộc hẹn này thành công. </p>
+        <p>Nếu bên tạo lịch xác nhận không lập hóa đơn. </p>
+    </div>
+
+    <div th:if="${result==false}">
+        <p>Lỗi ròi! </p>
+        <p>Kiểm tra xem cuộc hẹn đã bị hủy chưa.</p>
+    </div>
+
+</div>
+
+<div  th:if="${type == 'accept'}">
+    <div th:if="${result}">
+        <p>Thay đổi trạng thái cuộc hẹn thành bị từ chối (REJECTED) </p>
+        <p>Hủy lập hóa đơn.</p>
+    </div>
+
+    <div th:if="${result==false}">
+        <p>Lỗi ròi!</p>
+        <p>Kiểm tra cuộc hẹn bị từ chối chưa</p>
+    </div>
+
+</div>
+
+<div sec:authorize="!isAuthenticated()">
+    <p>Đăng ký tài khoản <a th:href="@{/login}">tại đây</a></p>
+</div>
+</div>
+</div>
+
+</body>
+
+</html>

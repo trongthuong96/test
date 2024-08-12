@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head></head>
+
+<body>
+<p>Chào bạn, <span th:text="${recipent.firstName}"></span></p>
+<p>Có tin nhắn mới trong lịch hẹn: </p>
+<p>Ngày bắt đầu: <span th:text="${#temporals.format(appointment.start, 'dd-MM-yyyy HH:mm')}"></span></p>
+<p>Nội dung: <span th:text="${appointment.work.name}"></span></p>
+
+<p>Click <a th:href="${url}">vào đây</a> để xem</p>
+
+</body>
+</html>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head></head>
+
+<body>
+<p th:if="${canceler =='customer'}">Chào bạn, <span th:text="${appointment.provider.firstName}"></span></p>
+<p th:if="${canceler =='provider'}">Chào bạn, <span th:text="${appointment.customer.firstName}"></span></p>
+<p>Cuộc hẹn này đã bị hủy bởi <span th:text="${canceler}"></span></p>
+<p>Ngày bắt đầu: <span th:text="${#temporals.format(appointment.start, 'dd-MM-yyyy HH:mm')}"></span></p>
+<p>Nội dung: <span th:text="${appointment.work.name}"></span></p>
+<p th:if="${canceler =='customer'}">Bên tạo lịch: <span th:text="${appointment.provider.firstName + ' ' + appointment.provider.lastName}"></span></p>
+<p th:if="${canceler =='provider'}">Bên đặt lịch: <span th:text="${appointment.customer.firstName + ' ' + appointment.customer.lastName}"></span></p>
+<p>Thời lượng: <span th:text="${appointment.work.duration}"></span></p>
+<p>Chi phí: <span th:text="${appointment.work.price}"></span></p>
+</body>
+
+</html>

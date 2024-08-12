@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout (~{::body},'notifications','Thông báo')}"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<body>
+
+
+<div class="row align-items-center justify-content-center" style="margin-top: 50px">
+
+
+    <div>
+        <div style="text-align:right">
+            <form th:action="@{/notifications/markAllAsRead}" id="markAllAsRead" method="POST">
+                <a class="btn btn-success" href="#"
+                   onclick="document.getElementById('markAllAsRead').submit(); return false;">Đánh dấu tất cả là đã đọc</a>
+            </form>
+        </div>
+        <table id="notifications" class="table table-striped text-center shadow-lg mt-2">
+
+            <thead class="thead-primary" style="background-color: #e3f2fd;">
+
+            <tr>
+                <th> Ngày</th>
+                <th> Tiêu đề</th>
+                <th> Nội dung</th>
+                <th> Hoạt động</th>
+                <th> Đã xem</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:if="${notifications.size()==0}">
+                <td colspan="5"> Không có thông báo nào</td>
+            </tr>
+            <tr th:each="notification : ${notifications}">
+                <td><span th:text="${#dates.format(notification.createdAt, 'dd-MM-yyyy')}"> 01-01-2024 </span></td>
+                <td><span th:text="${notification.title}"> Lịch hẹn mới </span></td>
+                <td><span th:text="${notification.message}"> Lời nhắn</span></td>
+                <td><a th:href="@{'/notifications/'+${notification.id}}">Xem</a></td>
+                <td><span th:text="${notification.isRead()}">true</span></td>
+
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#notifications').DataTable({
+            "order": [
+                [0, "desc"]
+            ]
+        });
+    });
+</script>
+</body>
+</html>

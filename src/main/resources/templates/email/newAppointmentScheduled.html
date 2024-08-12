@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head></head>
+
+<body>
+<p>Chào bạn, <span th:text="${appointment.provider.firstName}"></span></p>
+<p>Một khách hàng đã đặt lịch với bạn, đây là thông tin chi tiết:</p>
+<p>Ngày bắt đầu: <span th:text="${#temporals.format(appointment.start, 'dd-MM-yyyy HH:mm')}"></span></p>
+<p>Người đặt: <span th:text="${appointment.customer.firstName +' '+ appointment.customer.lastName}"></span></p>
+<p>Nội dung: <span th:text="${appointment.work.name}"></span></p>
+<p>Thời lượng: <span th:text="${appointment.work.duration}"></span> phút</p>
+<p>Chi phí: <span th:text="${appointment.work.price}"></span> VND</p>
+
+<p>Số liên hệ: <span th:text="${appointment.customer.mobile}"></span></p>
+<!-- Chèn hình ảnh, thay đổi đường dẫn tới hình ảnh của bạn -->
+<img th:src="@{img/barcodes/${appointment.barcodeId}.png}" alt="barcode"/>
+<img th:src="@{img/barcodes/19794.png}" alt="barcode"/>
+
+</body>
+</html>

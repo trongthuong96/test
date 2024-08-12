@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Login</title>
+</head>
+<body>
+<h1>QR Code Login</h1>
+<form id="qr-login-form">
+    <label for="qr-code-input">Scan your QR code:</label>
+    <input type="text" id="qr-code-input" name="qrCode" autofocus>
+    <button type="submit">Login</button>
+</form>
+<p id="error-message" style="color: red;"></p>
+
+<script>
+    document.getElementById('qr-login-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const qrCodeInput = document.getElementById('qr-code-input').value;
+        loginWithQRCode(qrCodeInput);
+    });
+
+    function loginWithQRCode(token) {
+        fetch('/api/auth/login/qr', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ token: token })
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.accessToken) {
+                    // Save the JWT token in localStorage or cookies and redirect to the dashboard
+                    localStorage.setItem('jwtToken', data.accessToken);
+                    window.location.href = '/dashboard';
+                } else {
+                    document.getElementById('error-message').textContent = 'Invalid token';
+                }
+            })
+            .catch(error => {
+                console.error('Error during authentication:', error);
+                document.getElementById('error-message').textContent = 'Error during authentication';
+            });
+    }
+</script>
+</body>
+</html>

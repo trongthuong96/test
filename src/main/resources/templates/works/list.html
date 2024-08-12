@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout (~{::body},'works','Nội dung lịch hẹn có sẵn')}"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<body>
+
+
+<div class="row align-items-center justify-content-center" style="margin-top: 50px">
+    <div>
+        <table id="works" class="table text-center shadow">
+            <thead class="thead-primary" style="background-color: #e3f2fd;">
+            <tr>
+                <th> Nội dung</th>
+                <th> Đối tượng</th>
+                <th> Chi phí</th>
+                <th> Thời lượng</th>
+                <th> Người tạo lịch</th>
+                <th> </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:if="${works == null}">
+                <td colspan="4"> Không có nội dung hẹn nào</td>
+            </tr>
+<!--Xet corporate thi table-info-->
+            <tr th:each="work : ${works}"
+                th:classappend="${work.targetCustomer=='retail'} ? table : table-info">
+                <td><span th:text="${work.name}"> english </span></td>
+                <td><span th:text="${work.targetCustomer}"> cá nhân </span></td>
+                <td><span th:text="${work.price + ' VND'}"> 50000 VND </span></td>
+                <td><span th:text="${work.duration+' phút'}"> 30 phút </span></td>
+                <td><span th:text="${work.providers.size()}"> 2 </span></td>
+                <td><a class="btn btn-secondary" th:href="@{'/works/' + ${work.id}}" role="button">Chi tiết</a>
+                    <form class="d-inline-block" th:action="@{/works/delete}" method="POST">
+                        <input type="hidden" name="workId" th:value="${work.id}" />
+                        <button type="submit" name="submit" value="value" class="btn btn-danger">Xóa</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+<div class="row align-items-center justify-content-center" style="margin-top: 50px">
+    <a class="btn btn-primary" th:href="@{/works/new}" role="button">Nội dung mới</a>
+</div>
+
+
+</body>
+
+</html>

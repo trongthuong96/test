@@ -1,0 +1,50 @@
+
+
+<th:block th:fragment="navlinks(activeLink)">
+    <!--Menu START-->
+    <div class="menu-logo">
+        <div class="navbar-brand">
+
+            <span class="navbar-caption-wrap">
+                <a class="navbar-caption text-white" th:href="@{/}">
+                    WebDatLich
+                </a>
+            </span>
+        </div>
+    </div>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent navbarResponsive">
+        <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+            <ul class="navbar-nav flex-grow-1">
+                <li class="nav-item" th:classappend="${activeLink} == 'home' ? 'active':''">
+                    <a class="nav-link link text-white " th:href="@{/}">Home</a>
+                </li>
+
+                <li class="nav-item" th:classappend="${activeLink} == 'appointments' ? 'active':''">
+                    <a class="nav-link" th:href="@{/appointments/all}">Lịch hẹn</a>
+                </li>
+                <li class="nav-item" th:classappend="${activeLink} == 'works' ? 'active':''">
+                    <a class="nav-link" th:href="@{/works/all}">Nội dung lịch hẹn</a>
+                </li>
+                <li class="nav-item" th:classappend="${activeLink} == 'providers' ? 'active':''">
+                    <a class="nav-link" th:href="@{/providers/all}">Bên tạo lịch</a>
+                </li>
+                <li class="nav-item" th:classappend="${activeLink} == 'customers' ? 'active':''">
+                    <a class="nav-link" th:href="@{/customers/all}">Bên đặt lịch</a>
+                </li>
+                <li class="nav-item" th:classappend="${activeLink} == 'invoices' ? 'active':''">
+                    <a class="nav-link" th:href="@{/invoices/all}">Hóa đơn</a>
+                </li>
+                <li class="nav-item">
+                    <a id="barcodeLink" class="nav-link link text-white" href="#">Barcode</a>
+                </li>
+            </ul>
+        </div>
+        <!--Menu end-->
+
+
+    </div>
+    <!--Menu END-->
+
+<!--Script BarcodeLink-->
+
+</th:block>

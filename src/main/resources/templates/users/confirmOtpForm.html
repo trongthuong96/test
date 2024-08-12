@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirm OTP</title>
+</head>
+<body>
+    <h1>Confirm OTP</h1>
+    <form th:action="@{/otp/confirm-otp}" method="post">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        <label for="otp">OTP:</label>
+        <input type="text" id="otp" name="otp" required>
+        <button type="submit">Confirm OTP</button>
+    </form>
+    <div th:if="${error}" th:text="${error}"></div>
+</body>
+</html>

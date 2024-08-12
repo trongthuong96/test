@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'account','Tài khoản của tôi')}"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+
+
+<body>
+
+
+<div class="row p-3">
+    <div class="col-sm-3">
+        <!--left col-->
+
+        <div class="text-center">
+            <img src="https://ih1.redbubble.net/image.2939668413.5458/bg,f8f8f8-flat,750x,075,f-pad,750x1000,f8f8f8.u1.jpg" class="avatar img-circle img-thumbnail"
+                 alt="avatar">
+
+        </div>
+        </hr><br>
+
+
+        <div class="card shadow text-center">
+            <div class="card-header">
+                Các lịch hẹn
+            </div>
+            <div class="card-body p-0">
+                <ul class="list-group">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Đã lên lịch
+                        <span class="badge badge-primary badge-pill"
+                              th:text="${numberOfScheduledAppointments}">2</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Đã hủy tháng này.
+                        <span class="badge badge-danger badge-pill"
+                              th:text="${numberOfCanceledAppointments}">1</span>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+
+
+    </div>
+
+        <div class="col-sm-9">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+                       aria-controls="profile" aria-selected="true">Hồ sơ</a>
+                </li>
+                <li sec:authorize="hasRole('ROLE_PROVIDER') or hasRole('ROLE_CUSTOMER')" class="nav-item">
+                    <a class="nav-link" id="newPassword-tab" data-toggle="tab" href="#newPassword" role="tab"
+                       aria-controls="newPassword" aria-selected="false">Mật khẩu</a>
+                </li>
+                <li sec:authorize="hasRole('ROLE_CUSTOMER') or hasRole('ROLE_PROVIDER')" class="nav-item">
+                    <a class="nav-link" id="qrCode-tab" data-toggle="tab" href="#qrCode" role="tab"
+                       aria-controls="qrCode" aria-selected="false">QR đăng nhập</a>
+                </li>
+
+            </ul>
+
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active pt-3 shadow-lg" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                        <div class="container">
+                        <form th:action="@{${formActionProfile}}" th:object="${user}" method="POST" accept-charset="UTF-8">
+
+                            <input type="hidden" class="form-control" th:field="*{id}">
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="userName">Tên đăng nhập</label>
+                                    <input type="text" class="form-control" th:classappend="${#fields.hasErrors('userName') ? 'is-invalid' :''}" th:field="*{userName}" readonly>
+                                    <div th:if="${#fields.hasErrors('userName')}" class="invalid-feedback">
+                                        <p th:errors="*{userName}"></p>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="email">Email</label>
+                                    <input type="text" class="form-control" th:classappend="${#fields.hasErrors('email') ? 'is-invalid' :''}" th:field="*{email}">
+                                    <div th:if="${#fields.hasErrors('email')}" class="invalid-feedback">
+                                        <p th:errors="*{email}"></p>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <th:block th:if="${account_type =='customer_corporate'}">
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="companyName">Tên Phòng khám</label>
+                                        <input type="text" class="form-control" th:classappend="${#fields.hasErrors('companyName') ? 'is-invalid' :''}" th:field="*{companyName}">
+                                        <div th:if="${#fields.hasErrors('companyName')}" class="invalid-feedback">
+                                            <p th:errors="*{companyName}"></p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="vatNumber">Mã số VAT</label>
+                                        <input type="text" class="form-control" th:classappend="${#fields.hasErrors('vatNumber') ? 'is-invalid' :''}" th:field="*{vatNumber}">
+                                        <div th:if="${#fields.hasErrors('vatNumber')}" class="invalid-feedback">
+                                            <p th:errors="*{vatNumber}"></p>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </th:block>
+
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="firstName">Tên</label>
+                                    <input type="text" class="form-control" th:classappend="${#fields.hasErrors('firstName') ? 'is-invalid' :''}" th:field="*{firstName}">
+                                    <div th:if="${#fields.hasErrors('firstName')}" class="invalid-feedback">
+                                        <p th:errors="*{firstName}"></p>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="lastName">Họ và tên lót</label>
+                                    <input type="text" class="form-control" th:classappend="${#fields.hasErrors('lastName') ? 'is-invalid' :''}" th:field="*{lastName}">
+                                    <div th:if="${#fields.hasErrors('lastName')}" class="invalid-feedback">
+                                        <p th:errors="*{lastName}"></p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="mobile">Số điện thoại</label>
+                                    <input type="text" class="form-control" th:classappend="${#fields.hasErrors('mobile') ? 'is-invalid' :''}" th:field="*{mobile}">
+                                    <div th:if="${#fields.hasErrors('mobile')}" class="invalid-feedback">
+                                        <p th:errors="*{mobile}"></p>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="street">Địa chỉ</label>
+                                    <input type="text" class="form-control" th:classappend="${#fields.hasErrors('street') ? 'is-invalid' :''}" th:field="*{street}">
+                                    <div th:if="${#fields.hasErrors('street')}" class="invalid-feedback">
+                                        <p th:errors="*{street}"></p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="city">Thành phố</label>
+                                    <input type="text" class="form-control" th:classappend="${#fields.hasErrors('city') ? 'is-invalid' :''}" th:field="*{city}">
+                                    <div th:if="${#fields.hasErrors('city')}" class="invalid-feedback">
+                                        <p th:errors="*{city}"></p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <th:block th:if="${account_type =='provider'}">
+                                <div class="form-group">
+                                    <p class="text-primary">Màu xanh: đối tượng là cá nhân</p>
+                                    <p class="text-info">Màu chàm: đối tượng thuộc bệnh viện/tổ chức</p>
+                                    <label>Nội dung lịch hẹn quản lý:</label>
+                                    <ul style="list-style-type: none;">
+                                        <li th:each="work : ${allWorks}">
+                                            <input type="checkbox" th:field="*{works}" th:value="${work.id}" />
+                                            <label th:for="${#ids.prev('works')}" th:classappend="${work.targetCustomer=='retail'} ? text-primary : text-info" th:text="${work.name}">Tư vấn tâm lý</label>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </th:block>
+
+                            <button type="submit" class="btn btn-primary">Lưu</button>
+                        </form>
+                        </div>
+
+
+                    </div>
+
+                    <div class="tab-pane fade pt-3 shadow-lg" id="newPassword" role="tabpanel" aria-labelledby="newPassword-tab">
+                        <div class="container">
+                        <form th:action="@{${formActionPassword}}" th:object="${passwordChange}" method="POST">
+
+                            <input type="hidden" th:field="*{id}">
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="currentPassword">Mật khẩu hiện tại</label>
+                                    <input type="password" class="form-control" th:classappend="${#fields.hasErrors('currentPassword') ? 'is-invalid' :''}" th:field="*{currentPassword}">
+                                    <div th:if="${#fields.hasErrors('currentPassword')}" class="invalid-feedback">
+                                        <p th:errors="*{currentPassword}"></p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="password">Mật khẩu mới:</label>
+                                    <input type="password" class="form-control" th:classappend="${#fields.hasErrors('password') ? 'is-invalid' :''}" th:field="*{password}">
+                                    <div th:if="${#fields.hasErrors('password')}" class="invalid-feedback">
+                                        <p th:errors="*{password}"></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="matchingPassword">Nhập lại mật khẩu:</label>
+                                    <input type="password" class="form-control" th:classappend="${#fields.hasErrors('matchingPassword') ? 'is-invalid' :''}" th:field="*{matchingPassword}">
+                                    <div th:if="${#fields.hasErrors('matchingPassword')}" class="invalid-feedback">
+                                        <p th:errors="*{matchingPassword}"></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Lưu</button>
+                        </form>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade pt-3 shadow-lg" id="qrCode" role="tabpanel" aria-labelledby="qrCode-tab">
+                        <div class="container">
+                            <img th:src="@{ '/'+ ${user.getQrCodePath()}}" alt="MoMo QR Code"/>
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+
+        </div>
+
+    <!--/col-3-->
+
+
+
+</div>
+</body>
+</html>

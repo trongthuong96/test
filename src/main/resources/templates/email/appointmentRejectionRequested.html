@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head></head>
+
+<body>
+<p>Chào bạn, <span th:text="${appointment.provider.firstName}"></span></p>
+<p>Bên đặt lích của bạn khiếu nại rằng cuộc hẹn sau đã không diễn ra: </p>
+<p>Người đặt lịch <span th:text="${appointment.customer.firstName + ' ' + appointment.customer.lastName}"></span></p>
+<p>Ngày bắt đầu: <span th:text="${#temporals.format(appointment.start, 'dd-MM-yyyy HH:mm')}"></span></p>
+<p>Nội dung: <span th:text="${appointment.work.name}"></span></p>
+<p>Thời lượng: <span th:text="${appointment.work.duration}"></span></p>
+<p>Chi phí: <span th:text="${appointment.work.price}"></span></p>
+<p>Nếu cuộc hẹn thực sự chưa diễn ra, nhấp vào <a th:href="${url}">đây.</a></p>
+
+</body>
+
+</html>

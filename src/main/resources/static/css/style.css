@@ -1,0 +1,35 @@
+.thead-dark .thead-dark th {
+    /*background-color: #343a40;*/
+    background: #3a87ad ;
+    color: white;
+    border-radius: 10px 10px 0px 0px;
+}
+
+table {
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 30px; /* Điều chỉnh giá trị này để thay đổi độ cong */
+    overflow: hidden; /* Đảm bảo các phần tử con không vượt qua biên của bảng */
+
+}
+
+th,
+td {
+    padding: 10px; /* Điều chỉnh giá trị này tùy theo nhu cầu */
+    border: 2px #ddd; /* Điều chỉnh style của đường viền */
+}
+
+th {
+    background-color: #c7dcf1; /* Màu nền của dòng tiêu đề */
+    font-weight: bold; /* Định dạng font chữ cho dòng tiêu đề */
+}
+.thead-primary{
+    background-image: linear-gradient(to bottom right, #ee9ca7 , #ffdde1); !important /* Gradient từ trên xuống dưới và từ trái sang phải */
+}
+
+a{
+        background-color: #6a76da;
+        border-color: grey;
+        color: black;
+        cursor: auto;
+}

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout (~{::body},'appointments','Xác nhận cuộc hẹn mới')}"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<body>
+<div class="row justify-content-center">
+    <div class="col-md-6 mt-3">
+
+        <table class="table">
+            <thead>
+            <tr class="text-center">
+                <td colspan="2">
+                    <h3>Tóm tắt cuộc hẹn mới</h3>
+                </td>
+            </tr>
+            </thead>
+
+            <tr>
+                <td><b>Ngày</b></td>
+                <td><span th:text="${#temporals.format(start, 'dd-MM-yyyy')}">10-02-2024</span></td>
+            </tr>
+            <tr>
+                <td><b>Giờ</b></td>
+                <td><span th:text="${#temporals.format(start, 'HH:mm')+' - '+ #temporals.format(end, 'HH:mm')}">14:00 - 15:00</span>
+                </td>
+            </tr>
+            <tr>
+                <td><b>Bác sĩ</b></td>
+                <td><span th:text="${provider}">Marian Nowak</span></td>
+            </tr>
+
+            <tr>
+                <td><b>Nội dung hẹn</b></td>
+                <td><span th:text="${work.name}"> english </span></td>
+            </tr>
+            <tr>
+                <td><b>Mô tả</b></td>
+                <td><span th:text="${work.description}">mô tả</span></td>
+            </tr>
+
+            <tr>
+                <td><b>Chi phí</b></td>
+                <td><span th:text="${work.price}"> 50 </span> VND</td>
+            </tr>
+
+            <tr>
+                <td><b>Người đặt lịch có thể sửa?</b></td>
+                <td><p th:text="${work.editable ? 'Có thể':'không, chỉ bác sĩ được phép'}">Yes</p></td>
+            </tr>
+            <tr class="text-center">
+                <td colspan="2">
+                    <form th:action="@{/appointments/new}" method="POST">
+                        <input type="hidden" name="workId" th:value="${work.id}">
+                        <input type="hidden" name="providerId" th:value="${providerId}">
+                        <input type="hidden" name="start" th:value="${start}">
+
+
+                        <button type="submit" class="btn btn-primary">Đặt</button>
+                    </form>
+
+                </td>
+            </tr>
+        </table>
+
+
+    </div>
+
+</div>
+
+</body>
+
+
+</html>

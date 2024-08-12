@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head></head>
+
+<body>
+<p>Chào bạn, <span th:text="${appointment.customer.firstName}"></span></p>
+<p>Bên đặt lịch của bạn đã xác nhận rằng cuộc hẹn này đã không diễn ra: </p>
+<p>Ngày bắt đầu: <span th:text="${#temporals.format(appointment.start, 'dd-MM-yyyy HH:mm')}"></span></p>
+<p>Nội dung: <span th:text="${appointment.work.name}"></span></p>
+<p>Thời lượng: <span th:text="${appointment.work.duration}"></span></p>
+<p>Chi phí: <span th:text="${appointment.work.price}"></span></p>
+
+<p><strong>Chuyển trạng thái thành bị hủy (REJECTED) và hủy lập hóa đơn.</strong></p>
+
+</body>
+
+</html>
