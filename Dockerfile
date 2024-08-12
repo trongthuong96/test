@@ -1,4 +1,3 @@
-# Sử dụng hình ảnh Maven chính thức để build ứng dụng
 FROM maven:3.8.5-openjdk-17 AS build
 
 # Đặt thư mục làm việc trong container
@@ -8,8 +7,12 @@ WORKDIR /app
 COPY pom.xml .
 COPY mvnw .
 COPY .mvn .mvn
+
 # Cấp quyền thực thi cho mvnw
 RUN chmod +x ./mvnw
+
+# Bỏ biến MAVEN_CONFIG nếu có
+ENV MAVEN_CONFIG=
 
 # Tải các dependencies xuống trước để cache chúng
 RUN ./mvnw dependency:go-offline -B
