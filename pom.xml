@@ -179,11 +179,11 @@
             <artifactId>redisson-spring-data-27</artifactId>
             <version>3.23.1</version>
         </dependency>
-        <dependency>
-            <groupId>io.lettuce.core</groupId>
-            <artifactId>lettuce-core</artifactId>
-            <version>6.1.5</version> <!-- Cập nhật phiên bản -->
-        </dependency>
+		<dependency>
+			<groupId>io.lettuce</groupId>
+			<artifactId>lettuce-core</artifactId>
+			<version>6.1.5.RELEASE</version>
+		</dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
